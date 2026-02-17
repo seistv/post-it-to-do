@@ -1,91 +1,97 @@
-<div class="app-container" [class.dark]="isDarkMode">
+<div class="app-container" [class.dark]="isDarkMode()">
   <!-- Add Task Form -->
-  <div class="form">
-    <input [(ngModel)]="newTask.title" placeholder="Task title">
+  <div class="row align-items-center">
+    <div class="col-auto">
+      <input [(ngModel)]="newTask.title" type="text" class="form-control" placeholder="Task title">
+    </div>
 
-    <input 
-        type="radio"
-        name="category"
-        value="Work"
-        id="Work"
-        class="btn-check"
-        [(ngModel)]="newTask.category"
-        autocomplete="off"
-        checked>
-    <label class="btn" for="Work" [class.dark]="isDarkMode">
-        Work
-    </label>
-
-
-    <input 
-        type="radio"
-        name="category"
-        value="Personal"
-        id="Personal"
-        class="btn-check"
-        [(ngModel)]="newTask.category"
-        autocomplete="off">
-    <label class="btn" for="Personal" [class.dark]="isDarkMode">
-        Personal
-    </label>
+    <div class="col-auto btn-group btn-group-toggle">
+      <input 
+          type="radio"
+          name="category"
+          value="Work"
+          id="Work"
+          class="btn-check"
+          [(ngModel)]="newTask.category"
+          autocomplete="off">
+      <label class="btn btn-rdo" for="Work" [class.dark]="isDarkMode()">
+          Work
+      </label>
 
 
-        <input 
-        type="radio"
-        name="category"
-        value="Study"
-        id="Study"
-        class="btn-check"
-        [(ngModel)]="newTask.category"
-        autocomplete="off">
-    <label class="btn" for="Study" [class.dark]="isDarkMode">
-        Study
-    </label>
+      <input 
+          type="radio"
+          name="category"
+          value="Personal"
+          id="Personal"
+          class="btn-check"
+          [(ngModel)]="newTask.category"
+          autocomplete="off">
+      <label class="btn btn-rdo" for="Personal" [class.dark]="isDarkMode()">
+          Personal
+      </label>
 
-    <input type="date" [(ngModel)]="newTask.dueDate">
 
-    <button (click)="addTask()">Add</button>
+      <input 
+          type="radio"
+          name="category"
+          value="Study"
+          id="Study"
+          class="btn-check"
+          [(ngModel)]="newTask.category"
+          autocomplete="off">
+      <label class="btn btn-rdo" for="Study" [class.dark]="isDarkMode()">
+          Study
+      </label>
+    </div>
+
+    <div class="col-auto">
+      <input type="date" class="form-control datepicker" [(ngModel)]="newTask.dueDate">
+    </div>
+
+    <div class="col-auto">
+      <button class="btn btn-warning" (click)="addTask()">Add</button>
+    </div>
   </div>
 
   <!-- Filters -->
-  <div class="filters">
-    <button (click)="setFilter('All')">All</button>
-    <button (click)="setFilter('Completed')">Completed</button>
-    <button (click)="setFilter('Pending')">Pending</button>
-    <button (click)="toggleTheme()">🌙</button>
+  <div class="filters row">
+    <div class="col-auto">
+      <button class="btn btn-light" (click)="setFilter('All')">All</button>
+      <button class="btn btn-light" (click)="setFilter('Completed')">Completed</button>
+      <button class="btn btn-light" (click)="setFilter('Pending')">Pending</button>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-light" (click)="toggleTheme()">🌙</button>
+    </div>
   </div>
 
   <!-- Task Counter -->
   <div class="counter">
-    Total: {{tasks.length}} |
-    Completed: {{completedCount}} |
-    Remaining: {{remainingCount}}
+    Total: {{tasks().length}} |
+    Completed: {{completedCount()}} |
+    Remaining: {{remainingCount()}}
   </div>
 
   <!-- Post-It Grid -->
   <div class="postit-grid" 
       cdkDropList 
       cdkDropListOrientation="mixed"
-      [cdkDropListData]="tasks" 
+      [cdkDropListData]="tasks()" 
       (cdkDropListDropped)="drop($event)">
-    @for (task of tasks; track task.id) {
-        <div class="postit"
+    @for (task of filteredTasks(); track task.id) {
+      <div class="postit"
          cdkDrag
          [class.completed]="task.completed"
-         [class.overdue]="isOverdue(task)"
-         [class.hidden]="!shouldShow(task)">
+         [class.overdue]="isOverdue(task)">
 
         <h3>{{task.title}}</h3>
         <p>📂 {{task.category}}</p>
-        @if (task.dueDate) {
-          <p>📅 {{task.dueDate}}</p>
-        } @else {
-          <p>📅 N/A</p>
-        }
-        
+        <p>📅 {{task.dueDate || 'N/A'}}</p>
+
         <div class="actions">
-          <button type="button" class="btn" (click)="toggleTask(task)">✔</button>
-          <button type="button" class="btn" (click)="deleteTask(task.id)">❌</button>
+          <button type="button" class="icon-btn" (click)="toggleTask(task)">✔</button>
+          <button type="button" class="icon-btn" (click)="deleteTask(task.id)">❌</button>
         </div>
 
       </div>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Task } from './models/task';
 import { TodoService } from '../../core/services/todo-service';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -11,9 +11,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './todo.scss',
 })
 export class Todo {
-  tasks: Task[] = [];
-  filter: string = 'All';
-  isDarkMode = false;
+  tasks = signal<Task[]>([]);
+  filter = signal<'All' | 'Pending' | 'Completed'>('All');
+  isDarkMode = signal(false);
   private todoService = inject(TodoService);
 
   newTask: Task = {
@@ -26,7 +26,7 @@ export class Todo {
   };
 
   ngOnInit(): void {
-    this.tasks = this.todoService.getTasks();
+    this.tasks.set(this.todoService.getTasks());
   }
 
   addTask() {
@@ -39,53 +39,40 @@ export class Todo {
       completed: false,
     };
 
-    this.tasks.push(task);
-    this.todoService.saveTasks(this.tasks);
+    this.tasks.update((tasks) => [...tasks, task]);
+    this.todoService.saveTasks(this.tasks());
     this.newTask.title = '';
   }
 
   toggleTask(task: Task) {
     task.completed = !task.completed;
-    this.todoService.saveTasks(this.tasks);
+    this.todoService.saveTasks(this.tasks());
   }
 
   deleteTask(id: number) {
-    this.tasks = this.tasks.filter((t) => t.id !== id);
-    this.todoService.saveTasks(this.tasks);
+    this.tasks().filter((t) => t.id !== id);
+    this.todoService.saveTasks(this.tasks());
   }
 
-  setFilter(filter: string) {
-    this.filter = filter;
+  setFilter(filter: 'All' | 'Pending' | 'Completed') {
+    this.filter.set(filter);
   }
 
-  // filteredTasks() {
-  //   if (this.filter === 'Completed') {
-  //     return this.tasks.filter((t) => t.completed);
-  //   }
+  filteredTasks = computed(() => {
+    const filter = this.filter();
+    const tasks = this.tasks();
 
-  //   if (this.filter === 'Pending') {
-  //     return this.tasks.filter((t) => !t.completed);
-  //   }
+    if (filter === 'Completed') return tasks.filter((t) => t.completed);
+    if (filter === 'Pending') return tasks.filter((t) => !t.completed);
+    return tasks;
+  });
 
-  //   return this.tasks;
-  // }
+  completedCount = computed(() => this.tasks().filter((t) => t.completed).length);
 
-  shouldShow(task: Task): boolean {
-    if (this.filter === 'Completed') return task.completed;
-    if (this.filter === 'Pending') return !task.completed;
-    return true;
-  }
-
-  get completedCount() {
-    return this.tasks.filter((t) => t.completed).length;
-  }
-
-  get remainingCount() {
-    return this.tasks.filter((t) => !t.completed).length;
-  }
+  remainingCount = computed(() => this.tasks().filter((t) => !t.completed).length);
 
   toggleTheme() {
-    this.isDarkMode = !this.isDarkMode;
+    this.isDarkMode.update((v) => !v);
   }
 
   drop(event: CdkDragDrop<Task[]>) {
@@ -95,7 +82,7 @@ export class Todo {
 
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
-    this.todoService.saveTasks(this.tasks);
+    this.todoService.saveTasks(this.tasks());
   }
 
   isOverdue(task: Task): boolean {
