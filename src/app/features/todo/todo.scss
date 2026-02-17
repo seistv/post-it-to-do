@@ -1,7 +1,7 @@
 .app-container {
   padding: 20px;
   min-height: 100vh;
-  background: #f4f4f4;
+  background: #ececec;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
@@ -168,6 +168,7 @@
 
 .cdk-drag {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  text-align: center;
 }
 
 .postit-grid.cdk-drop-list-dragging .postit {

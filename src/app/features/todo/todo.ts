@@ -50,7 +50,7 @@ export class Todo {
   }
 
   deleteTask(id: number) {
-    this.tasks().filter((t) => t.id !== id);
+    this.tasks.set(this.tasks().filter((t) => t.id !== id));
     this.todoService.saveTasks(this.tasks());
   }
 
@@ -76,13 +76,16 @@ export class Todo {
   }
 
   drop(event: CdkDragDrop<Task[]>) {
-    // moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
-    // this.todoService.saveTasks(this.tasks);
-    if (event.previousIndex === event.currentIndex) return;
+    // if (event.previousIndex === event.currentIndex) return;
 
-    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
-    this.todoService.saveTasks(this.tasks());
+    // this.todoService.saveTasks(this.tasks());
+
+    const updated = [...this.tasks()];
+    moveItemInArray(updated, event.previousIndex, event.currentIndex);
+    this.tasks.set(updated);
+    this.todoService.saveTasks(updated);
   }
 
   isOverdue(task: Task): boolean {

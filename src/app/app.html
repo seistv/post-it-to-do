@@ -1,11 +1,19 @@
-<header class="app-header">
-  <h1>📝 Post-It Task Board</h1>
-</header>
+<div class="app-shell">
+  <header class="app-header">
+    <span>📝 {{ title() }}</span>
+  </header>
 
-<main class="app-content">
-  <router-outlet></router-outlet>
-</main>
+  <main class="app-content">
+    <router-outlet></router-outlet>
+  </main>
 
-<footer class="app-footer">
-  <small>© 2026 JTG</small>
-</footer>
+  <footer class="app-footer">
+    <div class="container">
+      <div class="">
+        <a class="footer-link" href="#">Credits</a>
+        <a class="footer-link ms-3" href="#">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="container"><small>&copy; 2026 JTG</small></div>
+  </footer>
+</div>

@@ -2,7 +2,7 @@
   <!-- Add Task Form -->
   <div class="row align-items-center">
     <div class="col-auto">
-      <input [(ngModel)]="newTask.title" type="text" class="form-control" placeholder="Task title">
+      <input [(ngModel)]="newTask.title" type="text" class="form-control" placeholder="Task title" maxlength="12">
     </div>
 
     <div class="col-auto btn-group btn-group-toggle">
@@ -55,11 +55,11 @@
   </div>
 
   <!-- Filters -->
-  <div class="filters row">
+  <div class="filters row mt-2">
     <div class="col-auto">
       <button class="btn btn-light" (click)="setFilter('All')">All</button>
-      <button class="btn btn-light" (click)="setFilter('Completed')">Completed</button>
-      <button class="btn btn-light" (click)="setFilter('Pending')">Pending</button>
+      <button class="btn btn-light ms-1" (click)="setFilter('Completed')">Completed</button>
+      <button class="btn btn-light ms-1" (click)="setFilter('Pending')">Pending</button>
     </div>
     <div class="col-auto">
       <button class="btn btn-light" (click)="toggleTheme()">🌙</button>
@@ -67,7 +67,7 @@
   </div>
 
   <!-- Task Counter -->
-  <div class="counter">
+  <div class="counter text-start mt-3">
     Total: {{tasks().length}} |
     Completed: {{completedCount()}} |
     Remaining: {{remainingCount()}}
