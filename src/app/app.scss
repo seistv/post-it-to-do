@@ -15,7 +15,13 @@ main {
 }
 
 footer {
-  margin-top: 20px;
+  margin-top: 10px;
   opacity: 0.6;
   text-align: center;
+}
+
+.privacy-link, .credits-link  {
+  color: #202020;
+  text-decoration: none;
+  cursor: pointer;
 }

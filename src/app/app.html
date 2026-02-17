@@ -10,8 +10,15 @@
   <footer class="app-footer">
     <div class="container">
       <div class="">
-        <a class="footer-link" href="#">Credits</a>
-        <a class="footer-link ms-3" href="#">Privacy Policy</a>
+        <a class="credits-link" (click)="toggleCreditModal()">Credits</a>
+        @if (isCreditModalVisible()) {
+          <app-modal (close)="toggleCreditModal()" [modalTitle]="modalTitle" [modalContent]="modalContent"></app-modal>
+        }
+
+        <a class="privacy-link ms-3" (click)="togglePrivacyModal()">Privacy Policy</a>
+        @if (isPrivacyModalVisible()) {
+          <app-modal (close)="togglePrivacyModal()" [modalTitle]="modalTitle" [modalContent]="modalContent"></app-modal>
+        }
       </div>
     </div>
     <div class="container"><small>&copy; 2026 JTG</small></div>

@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 export class Todo {
   tasks = signal<Task[]>([]);
   filter = signal<'All' | 'Pending' | 'Completed'>('All');
-  isDarkMode = signal(false);
+  isDarkMode = signal<boolean>(false);
   private todoService = inject(TodoService);
 
   newTask: Task = {
