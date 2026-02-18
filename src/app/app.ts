@@ -1,6 +1,7 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Modal } from './features/modal/modal';
+import { Title } from '@angular/platform-browser';
 
 type ModalData = {
   title: string;
@@ -13,10 +14,15 @@ type ModalData = {
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('Post-It Task Board');
+  private titleService = inject(Title);
 
   modal = signal<ModalData | null>(null);
+
+  ngOnInit(): void {
+    this.titleService.setTitle(this.title());
+  }
 
   openModal(title: string, content: string) {
     this.modal.set({ title, content });
