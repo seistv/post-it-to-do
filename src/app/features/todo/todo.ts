@@ -19,6 +19,7 @@ export class Todo {
   newTask: Task = {
     id: 0,
     title: '',
+    description: '',
     category: 'Work',
     dueDate: '',
     completed: false,
@@ -27,6 +28,7 @@ export class Todo {
 
   ngOnInit(): void {
     this.tasks.set(this.todoService.getTasks());
+    this.isDarkMode.set(this.todoService.getTheme());
   }
 
   addTask() {
@@ -42,6 +44,9 @@ export class Todo {
     this.tasks.update((tasks) => [...tasks, task]);
     this.todoService.saveTasks(this.tasks());
     this.newTask.title = '';
+    this.newTask.description = '';
+    this.newTask.category = 'Work';
+    this.newTask.dueDate = '';
   }
 
   toggleTask(task: Task) {
@@ -73,15 +78,10 @@ export class Todo {
 
   toggleTheme() {
     this.isDarkMode.update((v) => !v);
+    this.todoService.toggleTheme(this.isDarkMode());
   }
 
   drop(event: CdkDragDrop<Task[]>) {
-    // if (event.previousIndex === event.currentIndex) return;
-
-    // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-
-    // this.todoService.saveTasks(this.tasks());
-
     const updated = [...this.tasks()];
     moveItemInArray(updated, event.previousIndex, event.currentIndex);
     this.tasks.set(updated);

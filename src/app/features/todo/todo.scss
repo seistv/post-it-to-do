@@ -21,6 +21,17 @@
   padding: 8px;
 }
 
+.description {
+  font-size: 14px;
+  margin-bottom: 8px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.btn-warning {
+  width: 100%;
+}
+
 /* GRID */
 .postit-grid {
   display: grid;
@@ -44,7 +55,19 @@
   cursor: grab;
   will-change: transform;
   border-radius: 6px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
 }
+
+.postit h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
 
 .postit:active {
   cursor: grabbing;

@@ -2,56 +2,70 @@
   <!-- Add Task Form -->
   <div class="row align-items-center">
     <div class="col-auto">
-      <input [(ngModel)]="newTask.title" type="text" class="form-control" placeholder="Task title" maxlength="12">
-    </div>
-
-    <div class="col-auto btn-group btn-group-toggle">
-      <input 
-          type="radio"
-          name="category"
-          value="Work"
-          id="Work"
-          class="btn-check"
-          [(ngModel)]="newTask.category"
-          autocomplete="off">
-      <label class="btn btn-rdo" for="Work" [class.dark]="isDarkMode()">
-          Work
-      </label>
-
-
-      <input 
-          type="radio"
-          name="category"
-          value="Personal"
-          id="Personal"
-          class="btn-check"
-          [(ngModel)]="newTask.category"
-          autocomplete="off">
-      <label class="btn btn-rdo" for="Personal" [class.dark]="isDarkMode()">
-          Personal
-      </label>
-
-
-      <input 
-          type="radio"
-          name="category"
-          value="Study"
-          id="Study"
-          class="btn-check"
-          [(ngModel)]="newTask.category"
-          autocomplete="off">
-      <label class="btn btn-rdo" for="Study" [class.dark]="isDarkMode()">
-          Study
-      </label>
+      <input [(ngModel)]="newTask.title" type="text" class="form-control title" placeholder="Task title" required>
+      <textarea class="form-control description mt-1" [(ngModel)]="newTask.description" placeholder="Details (optional)" rows="3"></textarea>
     </div>
 
     <div class="col-auto">
-      <input type="date" class="form-control datepicker" [(ngModel)]="newTask.dueDate">
+      <div class="col-auto btn-group btn-group-toggle">
+        <input 
+            type="radio"
+            name="category"
+            value="Work"
+            id="Work"
+            class="btn-check"
+            [(ngModel)]="newTask.category"
+            autocomplete="off">
+        <label class="btn btn-rdo" for="Work" [class.dark]="isDarkMode()">
+            Work
+        </label>
+
+        <input 
+            type="radio"
+            name="category"
+            value="Personal"
+            id="Personal"
+            class="btn-check"
+            [(ngModel)]="newTask.category"
+            autocomplete="off">
+        <label class="btn btn-rdo" for="Personal" [class.dark]="isDarkMode()">
+            Personal
+        </label>
+
+        <input 
+            type="radio"
+            name="category"
+            value="Study"
+            id="Study"
+            class="btn-check"
+            [(ngModel)]="newTask.category"
+            autocomplete="off">
+        <label class="btn btn-rdo" for="Study" [class.dark]="isDarkMode()">
+            Study
+        </label>
+
+        <input 
+            type="radio"
+            name="category"
+            value="Others"
+            id="Others"
+            class="btn-check"
+            [(ngModel)]="newTask.category"
+            autocomplete="off">
+        <label class="btn btn-rdo" for="Others" [class.dark]="isDarkMode()">
+            Others
+        </label>
+      </div>
+
+      <div class="col-auto">
+        <input type="date" class="form-control datepicker" [(ngModel)]="newTask.dueDate">
+      </div>
+
+      <div class="col-auto mt-1">
+        <button class="btn btn-warning" (click)="addTask()">Add</button>
+      </div>
     </div>
 
-    <div class="col-auto">
-      <button class="btn btn-warning" (click)="addTask()">Add</button>
-    </div>
   </div>
 
   <!-- Filters -->
@@ -62,7 +76,7 @@
       <button class="btn btn-light ms-1" (click)="setFilter('Pending')">Pending</button>
     </div>
     <div class="col-auto">
-      <button class="btn btn-light" (click)="toggleTheme()">🌙</button>
+      <button class="btn btn-light" (click)="toggleTheme()"><i id="theme-icon" class="bi bi-moon"></i></button>
     </div>
   </div>
 
@@ -86,6 +100,7 @@
          [class.overdue]="isOverdue(task)">
 
         <h3>{{task.title}}</h3>
+        <p class="description">{{ task.description }}</p>
         <p>📂 {{task.category}}</p>
         <p>📅 {{task.dueDate || 'N/A'}}</p>
 

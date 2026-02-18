@@ -6,6 +6,7 @@ import { Task } from '../../features/todo/models/task';
 })
 export class TodoService {
   private storageKey = 'postit_tasks';
+  private darkModeKey = 'darkmode';
 
   private isBrowser(): boolean {
     return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
@@ -19,5 +20,23 @@ export class TodoService {
   saveTasks(tasks: Task[]) {
     if (!this.isBrowser()) return;
     localStorage.setItem(this.storageKey, JSON.stringify(tasks));
+  }
+
+  getTheme(): boolean {
+    if (localStorage.getItem(this.darkModeKey) === 'enabled') {
+      const themeIcon = document.getElementById('theme-icon');
+      themeIcon?.classList.replace('bi-moon', 'bi-sun');
+      return true;
+    }
+    return false;
+  }
+
+  toggleTheme(isDarkMode: boolean) {
+    const themeIcon = document.getElementById('theme-icon');
+    localStorage.setItem(this.darkModeKey, isDarkMode ? 'enabled' : 'disabled');
+    themeIcon?.classList.replace(
+      isDarkMode ? 'bi-moon' : 'bi-sun',
+      isDarkMode ? 'bi-sun' : 'bi-moon',
+    );
   }
 }

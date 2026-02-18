@@ -1,7 +1,8 @@
 export interface Task {
   id: number;
   title: string;
-  category: 'Work' | 'Personal' | 'Study';
+  description: string;
+  category: 'Work' | 'Personal' | 'Study' | 'Others';
   dueDate: string;
   completed: boolean;
   createdAt: string;
