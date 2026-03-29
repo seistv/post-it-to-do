@@ -3,10 +3,21 @@ import { Task } from './models/task';
 import { TodoService } from '../../core/services/todo-service';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-todo',
-  imports: [FormsModule, DragDropModule],
+  imports: [
+    FormsModule,
+    DragDropModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    CommonModule,
+  ],
   templateUrl: './todo.html',
   styleUrl: './todo.scss',
 })
@@ -32,6 +43,7 @@ export class Todo {
   }
 
   addTask() {
+    const due = new Date(this.newTask.dueDate);
     if (!this.newTask.title.trim()) return;
 
     const task: Task = {

@@ -3,7 +3,7 @@
   <div class="row align-items-center">
     <div class="col-auto">
       <input [(ngModel)]="newTask.title" id="title" type="text" class="form-control title" placeholder="Task title" required>
-      <textarea class="form-control description mt-1" id="description" [(ngModel)]="newTask.description" placeholder="Details (optional)" rows="3"></textarea>
+      <textarea class="form-control description mt-1" id="description" [(ngModel)]="newTask.description" placeholder="Details (optional)" rows="5"></textarea>
     </div>
 
     <div class="col-auto">
@@ -16,7 +16,7 @@
             class="btn-check"
             [(ngModel)]="newTask.category"
             autocomplete="off">
-        <label class="btn btn-rdo" for="Work" [class.dark]="isDarkMode()">
+        <label class="btn btn-rdo" for="work" [class.dark]="isDarkMode()">
             Work
         </label>
 
@@ -28,7 +28,7 @@
             class="btn-check"
             [(ngModel)]="newTask.category"
             autocomplete="off">
-        <label class="btn btn-rdo" for="Personal" [class.dark]="isDarkMode()">
+        <label class="btn btn-rdo" for="personal" [class.dark]="isDarkMode()">
             Personal
         </label>
 
@@ -40,7 +40,7 @@
             class="btn-check"
             [(ngModel)]="newTask.category"
             autocomplete="off">
-        <label class="btn btn-rdo" for="Study" [class.dark]="isDarkMode()">
+        <label class="btn btn-rdo" for="study" [class.dark]="isDarkMode()">
             Study
         </label>
 
@@ -52,16 +52,21 @@
             class="btn-check"
             [(ngModel)]="newTask.category"
             autocomplete="off">
-        <label class="btn btn-rdo" for="Others" [class.dark]="isDarkMode()">
+        <label class="btn btn-rdo" for="others" [class.dark]="isDarkMode()">
             Others
         </label>
       </div>
 
       <div class="row mt-1">
-        <input type="date" class="form-control datepicker" id="due-date" [(ngModel)]="newTask.dueDate">
+        <mat-form-field appearance="fill">
+          <mat-label>Due Date</mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="newTask.dueDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
       </div>
 
-      <div class="row mt-2">
+      <div class="row">
         <button class="btn btn-warning" id="add-button" (click)="addTask()">Add</button>
       </div>
     </div>
@@ -102,7 +107,7 @@
         <h3>{{task.title}}</h3>
         <p class="description">{{ task.description }}</p>
         <p>📂 {{task.category}}</p>
-        <p>📅 {{task.dueDate || 'N/A'}}</p>
+        <p>📅 {{ task.dueDate ? (task.dueDate | date:'MMM d, yyyy') : 'N/A' }}</p>
 
         <div class="actions">
           <button type="button" class="icon-btn" (click)="toggleTask(task)">✔</button>
