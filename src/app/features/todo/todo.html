@@ -2,17 +2,17 @@
   <!-- Add Task Form -->
   <div class="row align-items-center">
     <div class="col-auto">
-      <input [(ngModel)]="newTask.title" type="text" class="form-control title" placeholder="Task title" required>
-      <textarea class="form-control description mt-1" [(ngModel)]="newTask.description" placeholder="Details (optional)" rows="3"></textarea>
+      <input [(ngModel)]="newTask.title" id="title" type="text" class="form-control title" placeholder="Task title" required>
+      <textarea class="form-control description mt-1" id="description" [(ngModel)]="newTask.description" placeholder="Details (optional)" rows="3"></textarea>
     </div>
 
     <div class="col-auto">
-      <div class="col-auto btn-group btn-group-toggle">
+      <div class="btn-group btn-group-toggle">
         <input 
             type="radio"
             name="category"
             value="Work"
-            id="Work"
+            id="work"
             class="btn-check"
             [(ngModel)]="newTask.category"
             autocomplete="off">
@@ -24,7 +24,7 @@
             type="radio"
             name="category"
             value="Personal"
-            id="Personal"
+            id="personal"
             class="btn-check"
             [(ngModel)]="newTask.category"
             autocomplete="off">
@@ -36,7 +36,7 @@
             type="radio"
             name="category"
             value="Study"
-            id="Study"
+            id="study"
             class="btn-check"
             [(ngModel)]="newTask.category"
             autocomplete="off">
@@ -48,7 +48,7 @@
             type="radio"
             name="category"
             value="Others"
-            id="Others"
+            id="others"
             class="btn-check"
             [(ngModel)]="newTask.category"
             autocomplete="off">
@@ -57,12 +57,12 @@
         </label>
       </div>
 
-      <div class="col-auto">
-        <input type="date" class="form-control datepicker" [(ngModel)]="newTask.dueDate">
+      <div class="row mt-1">
+        <input type="date" class="form-control datepicker" id="due-date" [(ngModel)]="newTask.dueDate">
       </div>
 
-      <div class="col-auto mt-1">
-        <button class="btn btn-warning" (click)="addTask()">Add</button>
+      <div class="row mt-2">
+        <button class="btn btn-warning" id="add-button" (click)="addTask()">Add</button>
       </div>
     </div>
 
@@ -71,12 +71,12 @@
   <!-- Filters -->
   <div class="filters row mt-2">
     <div class="col-auto">
-      <button class="btn btn-light" (click)="setFilter('All')">All</button>
-      <button class="btn btn-light ms-1" (click)="setFilter('Completed')">Completed</button>
-      <button class="btn btn-light ms-1" (click)="setFilter('Pending')">Pending</button>
+      <button class="btn btn-light" id="all-button" (click)="setFilter('All')">All</button>
+      <button class="btn btn-light ms-1" id="completed-button" (click)="setFilter('Completed')">Completed</button>
+      <button class="btn btn-light ms-1" id="pending-button" (click)="setFilter('Pending')">Pending</button>
     </div>
     <div class="col-auto">
-      <button class="btn btn-light" (click)="toggleTheme()"><i id="theme-icon" class="bi bi-moon"></i></button>
+      <button class="btn btn-light" id="theme-button" (click)="toggleTheme()"><i id="theme-icon" class="bi bi-moon"></i></button>
     </div>
   </div>
 
